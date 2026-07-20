@@ -1,0 +1,3 @@
+﻿rank,job_id,company,job_title,location,job_type,score,source_url,shortlist_date,review_status,application_status
+1,JOB001,示例科技公司,商业分析培训生,深圳,校招,60,https://example.com/job001,2026-07-20,pending,not_applied
+2,JOB002,示例互联网公司,经营分析培训生,北京,校招,59,https://example.com/job002,2026-07-20,pending,not_applied

@@ -1,0 +1,5 @@
+job_id,company,job_title,location,job_type,status,source_url,discovered_date
+JOB001,示例科技公司,商业分析培训生,深圳,校招,open,https://example.com/job001,2026-07-20
+JOB002,示例互联网公司,经营分析培训生,北京,校招,open,https://example.com/job002,2026-07-20
+JOB003,示例汽车公司,财务分析培训生,上海,校招,closed,https://example.com/job003,2026-07-20
+JOB004,示例科技公司,商业分析培训生,深圳,校招,open,https://example.com/job001,2026-07-20
