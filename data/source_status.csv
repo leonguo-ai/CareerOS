@@ -1,0 +1,4 @@
+﻿source_id,company,source_name,source_url,http_status,status,note,checked_at
+SRC001,腾讯,腾讯校园招聘,https://join.qq.com/,200,reachable,网站可以访问,2026-07-20T22:15:15
+SRC002,阿里巴巴,阿里巴巴校园招聘,https://campus-talent.alibaba.com/campus/index,200,reachable,网站可以访问,2026-07-20T22:15:17
+SRC003,字节跳动,字节跳动校园招聘,https://jobs.bytedance.com/campus,200,reachable,网站可以访问,2026-07-20T22:15:20

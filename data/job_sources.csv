@@ -1,0 +1,4 @@
+source_id,company,source_name,source_url,source_type,enabled
+SRC001,腾讯,腾讯校园招聘,https://join.qq.com/,official_campus,true
+SRC002,阿里巴巴,阿里巴巴校园招聘,https://campus-talent.alibaba.com/campus/index,official_campus,true
+SRC003,字节跳动,字节跳动校园招聘,https://jobs.bytedance.com/campus,official_campus,true
