@@ -1,5 +1,5 @@
 # 读取岗位JD
-with open("jobs/sample_jd.txt", "r", encoding="utf-8") as f:
+with open("jobs/current_jd.txt", "r", encoding="utf-8") as f:
     jd = f.read()
 
 # 读取主简历
@@ -33,6 +33,14 @@ keyword_library = [
     "Tableau",
     "英语"
 ]
+
+jd_alias_library = {
+    "英语": ["英语", "英文", "English"],
+    "数据分析": ["数据分析", "数据处理", "数据清洗"],
+    "财务分析": ["财务分析", "财务测算"],
+    "成本分析": ["成本分析", "成本控制", "成本差异"],
+    "战略分析": ["战略分析", "战略研究", "战略规划"]
+}
 
 # 同义词与相关表达
 synonym_library = {
@@ -73,9 +81,12 @@ synonym_library = {
 }
 # 第一步：找出JD中真正要求的关键词
 required_keywords = []
+jd_lower = jd.lower()
 
 for keyword in keyword_library:
-    if keyword.lower() in jd.lower():
+    aliases = jd_alias_library.get(keyword, [keyword])
+
+    if any(alias.lower() in jd_lower for alias in aliases):
         required_keywords.append(keyword)
 
 print("\n===== JD要求的关键词 =====")
