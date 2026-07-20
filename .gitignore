@@ -1,3 +1,4 @@
 resumes/master_resume.txt
 resumes/*.pdf
 .env
+data/source_screenshots/

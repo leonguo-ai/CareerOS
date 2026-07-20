@@ -1,0 +1,4 @@
+﻿source_id,company,link_text,entry_url,score,classification,reasons,review_status
+SRC003,字节跳动,职位,https://jobs.bytedance.com/campus/position,140,likely_job_list,入口文字包含“职位” +30；网址包含“position” +35；网址包含“job” +30；网址包含“jobs” +30；网址包含“campus” +15,approved
+SRC003,字节跳动,校招,https://jobs.bytedance.com/campus/,90,likely_job_list,入口文字包含“校招” +15；网址包含“job” +30；网址包含“jobs” +30；网址包含“campus” +15,approved
+SRC001,腾讯,岗位投递,javascript:void(0),-50,requires_click_adapter,不可直接访问的链接 -100；入口文字包含“岗位” +25；入口文字包含“岗位投递” +25,manual_review

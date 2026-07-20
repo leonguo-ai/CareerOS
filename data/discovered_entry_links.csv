@@ -1,0 +1,4 @@
+﻿source_id,company,link_text,matched_keyword,entry_url,source_url,review_status
+SRC001,腾讯,岗位投递,岗位,javascript:void(0),https://join.qq.com/,pending
+SRC003,字节跳动,校招,校招,https://jobs.bytedance.com/campus/,https://jobs.bytedance.com/campus,pending
+SRC003,字节跳动,职位,职位,https://jobs.bytedance.com/campus/position,https://jobs.bytedance.com/campus,pending
