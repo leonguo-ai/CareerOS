@@ -1,9 +1,10 @@
 import csv
 import re
-from datetime import datetime
+from datetime import datetime, timezone
 from pathlib import Path
 
 from playwright.sync_api import sync_playwright
+from job_identity import job_id
 
 
 INPUT_PATH = "data/bytedance_filtered_jobs.csv"
@@ -26,7 +27,8 @@ with open(INPUT_PATH, "r", encoding="utf-8-sig") as f:
     for row in reader:
         if row["recommendation"] in [
             "priority_review",
-            "manual_review"
+            "manual_review",
+            "verify_first"
         ]:
             candidate_jobs.append(row)
 
@@ -60,6 +62,7 @@ with sync_playwright() as playwright:
         page = context.new_page()
 
         source_url = job["source_url"]
+        ident = job_id(source_url)
         raw_title = job["raw_job_title"]
 
         print(f"正在验证第 {index} 个岗位")
@@ -140,23 +143,9 @@ with sync_playwright() as playwright:
                 else:
                     page_status = "empty_page"
 
-            safe_name = re.sub(
-                r'[\\/:*?"<>|]+',
-                "_",
-                clean_job_title or f"job_{index}"
-            )
-
-            safe_name = safe_name[:60]
-
-            detail_path = (
-                DETAIL_DIRECTORY
-                / f"{index:02d}_{safe_name}.txt"
-            )
-
-            detail_path.write_text(
-                detail_text,
-                encoding="utf-8"
-            )
+            detail_path = DETAIL_DIRECTORY / f"{ident}.txt"
+            if detail_text:
+                detail_path.write_text(detail_text, encoding="utf-8")
 
             print(f"岗位名称：{clean_job_title}")
             print(f"页面状态：{page_status}")
@@ -175,6 +164,7 @@ with sync_playwright() as playwright:
 
         verified_jobs.append(
             {
+                "job_id": ident,
                 "company": "字节跳动",
                 "job_title": clean_job_title,
                 "raw_job_title": raw_title,
@@ -183,11 +173,13 @@ with sync_playwright() as playwright:
                 "page_title": page_title,
                 "page_status": page_status,
                 "detail_length": len(detail_text),
-                "is_2027": job["is_2027"],
+                "is_2027": "unverified",
+                "opening_status": "unverified",
+                "detail_path": str(DETAIL_DIRECTORY / f"{ident}.txt") if detail_text else "",
                 "relevance_score": job["relevance_score"],
-                "recommendation": job["recommendation"],
+                "recommendation": "verify_first",
                 "error_message": error_message,
-                "verified_at": datetime.now().isoformat(
+                "verified_at": datetime.now(timezone.utc).isoformat(
                     timespec="seconds"
                 ),
                 "review_status": "pending"
@@ -201,6 +193,7 @@ with sync_playwright() as playwright:
 
 
 fieldnames = [
+    "job_id",
     "company",
     "job_title",
     "raw_job_title",
@@ -210,6 +203,8 @@ fieldnames = [
     "page_status",
     "detail_length",
     "is_2027",
+    "opening_status",
+    "detail_path",
     "relevance_score",
     "recommendation",
     "error_message",

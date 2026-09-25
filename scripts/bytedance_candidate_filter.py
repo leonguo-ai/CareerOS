@@ -1,4 +1,5 @@
 import csv
+from job_identity import job_id
 
 INPUT_PATH = "data/bytedance_discovered_jobs.csv"
 OUTPUT_PATH = "data/bytedance_filtered_jobs.csv"
@@ -44,7 +45,6 @@ GRADUATION_KEYWORDS = [
     "2027届",
     "面向2027届毕业生",
     "2026年9月-2027年8月",
-    "ByteIntern"
 ]
 
 
@@ -108,18 +108,20 @@ for row in rows:
         reasons.append("实习岗位 +5")
 
     if score >= 50:
-        recommendation = "priority_review"
+        recommendation = "verify_first"
     elif score >= 20:
-        recommendation = "manual_review"
+        recommendation = "verify_first"
     else:
         recommendation = "low_priority"
 
     filtered_results.append(
         {
+            "job_id": job_id(row["source_url"]),
             "company": row["company"],
             "raw_job_title": job_text,
             "source_url": row["source_url"],
-            "is_2027": "yes" if is_2027 else "unverified",
+            "is_2027": "unverified",
+            "eligibility_hint": "2027 mentioned in listing" if is_2027 else "",
             "relevance_score": score,
             "matched_target_keywords": "、".join(
                 matched_target_keywords
@@ -157,10 +159,12 @@ for rank, result in enumerate(filtered_results, start=1):
 
 
 fieldnames = [
+    "job_id",
     "company",
     "raw_job_title",
     "source_url",
     "is_2027",
+    "eligibility_hint",
     "relevance_score",
     "matched_target_keywords",
     "low_relevance_keywords",
@@ -186,13 +190,8 @@ with open(
     writer.writerows(filtered_results)
 
 
-priority_count = sum(
-    result["recommendation"] == "priority_review"
-    for result in filtered_results
-)
-
-manual_count = sum(
-    result["recommendation"] == "manual_review"
+verify_count = sum(
+    result["recommendation"] == "verify_first"
     for result in filtered_results
 )
 
@@ -203,7 +202,6 @@ low_priority_count = sum(
 
 
 print("===== 筛选报告 =====")
-print(f"优先审核：{priority_count}")
-print(f"人工审核：{manual_count}")
+print(f"待核实：{verify_count}")
 print(f"低优先级：{low_priority_count}")
 print(f"结果已保存：{OUTPUT_PATH}")

@@ -3,6 +3,7 @@ from datetime import date
 from urllib.parse import urljoin
 
 from playwright.sync_api import sync_playwright
+from job_identity import job_id
 
 LIST_URL = "https://jobs.bytedance.com/campus/position"
 OUTPUT_PATH = "data/bytedance_discovered_jobs.csv"
@@ -89,6 +90,7 @@ with sync_playwright() as playwright:
 
             discovered_jobs.append(
                 {
+                    "job_id": job_id(absolute_url),
                     "company": "字节跳动",
                     "job_title": normalized_text,
                     "source_url": absolute_url,
@@ -114,7 +116,11 @@ with sync_playwright() as playwright:
         context.close()
         browser.close()
 
+if not discovered_jobs:
+    raise SystemExit("未发现岗位，未覆盖已有发现结果；请检查页面和选择器")
+
 fieldnames = [
+    "job_id",
     "company",
     "job_title",
     "source_url",

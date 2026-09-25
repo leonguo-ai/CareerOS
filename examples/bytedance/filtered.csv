@@ -1,0 +1,2 @@
+job_id,company,raw_job_title,source_url,is_2027,relevance_score,recommendation
+BD-12345,字节跳动,示例：数据分析实习生,https://example.invalid/campus/position/12345/detail,unverified,35,verify_first

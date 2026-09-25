@@ -4,3 +4,9 @@ resumes/*.pdf
 data/source_screenshots/
 data/bytedance_position_page.png
 data/bytedance_job_details/
+# Local review history, generated decisions, and private text
+/data/bytedance_reviews.json
+/data/bytedance_reviews.json.tmp
+/data/bytedance_actionable.csv
+**/__pycache__/
+*.pyc
